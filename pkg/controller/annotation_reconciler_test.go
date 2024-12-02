@@ -16,8 +16,10 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/client-go/kubernetes/scheme"
+	"k8s.io/client-go/rest"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	restclient "sigs.k8s.io/controller-runtime/pkg/client/config"
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
@@ -932,19 +934,25 @@ func TestTTLReconciler(t *testing.T) {
 					require.NoError(t, appsv1.AddToScheme(s))
 					require.NoError(t, batchv1.AddToScheme(s))
 
-					cfg, err := getTestKubeconfig()
-					require.NoError(t, err)
-
-					client := fake.NewClientBuilder().WithScheme(s).Build()
+					//client := fake.NewClientBuilder().WithScheme(s).Build()
 
 					r := &ResourceReaper{
-						Client: client,
+						Client: fake.NewClientBuilder().WithScheme(s).Build(),
 						Log:    zap.New(),
 						Scheme: s,
 					}
 
+					cfg, err := restclient.GetConfig()
+					require.NoError(t, err)
+
 					mgr, err := ctrl.NewManager(cfg, ctrl.Options{
 						Scheme: s,
+						//Metrics: ctrl.MetricsConfig{
+						//	BindAddress: "0", // Equivalent to previous MetricsBindAddress
+						//},
+						NewClient: func(cfg *rest.Config, opts client.Options) (client.Client, error) {
+							return fake.NewClientBuilder().WithScheme(s).Build(), nil // Use the fake client for testing
+						},
 					})
 					require.NoError(t, err)
 
@@ -963,19 +971,23 @@ func TestTTLReconciler_SetupWithManager(t *testing.T) {
 	err = appsv1.AddToScheme(s)
 	require.NoError(t, err)
 
-	cfg, err := getTestKubeconfig()
+	cfg, err := restclient.GetConfig()
 	require.NoError(t, err)
 
-	client := fake.NewClientBuilder().WithScheme(s).Build()
-
 	r := &ResourceReaper{
-		Client: client,
+		Client: fake.NewClientBuilder().WithScheme(s).Build(),
 		Log:    log.Log.WithName("test"),
 		Scheme: s,
 	}
 
 	mgr, err := ctrl.NewManager(cfg, ctrl.Options{
 		Scheme: s,
+		//Metrics: ctrl.MetricsConfig{
+		//	BindAddress: "0", // Equivalent to previous MetricsBindAddress
+		//},
+		NewClient: func(cfg *rest.Config, opts client.Options) (client.Client, error) {
+			return fake.NewClientBuilder().WithScheme(s).Build(), nil // Use the fake client for testing
+		},
 	})
 	require.NoError(t, err)
 

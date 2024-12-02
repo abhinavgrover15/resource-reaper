@@ -24,10 +24,16 @@ func getTestKubeconfig() (*rest.Config, error) {
 
 	// Finally try default kubeconfig path
 	home, err := os.UserHomeDir()
-	if err != nil {
-		return nil, err
+	if err == nil {
+		kubeconfig := filepath.Join(home, ".kube", "config")
+		cfg, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
+		if err == nil {
+			return cfg, nil
+		}
 	}
 
-	kubeconfig := filepath.Join(home, ".kube", "config")
-	return clientcmd.BuildConfigFromFlags("", kubeconfig)
+	// If no kubeconfig is available, return a fake config for testing
+	return &rest.Config{
+		Host: "http://localhost:8080",
+	}, nil
 }
