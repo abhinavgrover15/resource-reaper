@@ -7,6 +7,11 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: write
+  packages: write
+  pull-requests: read
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -67,12 +72,15 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
     permissions:
       contents: write
-    
+      packages: write
+      
     steps:
     - uses: actions/checkout@v3
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         generate_release_notes: true
         files: |
