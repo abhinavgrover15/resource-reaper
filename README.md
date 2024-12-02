@@ -1,5 +1,11 @@
 # Resource Reaper
 
+[![CI/CD](https://github.com/abhinavgrover15/resource-reaper/actions/workflows/ci.yml/badge.svg)](https://github.com/abhinavgrover15/resource-reaper/actions/workflows/ci.yml)
+[![Helm Release](https://github.com/abhinavgrover15/resource-reaper/actions/workflows/helm-release.yml/badge.svg)](https://github.com/abhinavgrover15/resource-reaper/actions/workflows/helm-release.yml)
+[![codecov](https://codecov.io/gh/abhinavgrover15/resource-reaper/branch/main/graph/badge.svg)](https://codecov.io/gh/abhinavgrover15/resource-reaper)
+[![Go Report Card](https://goreportcard.com/badge/github.com/abhinavgrover15/resource-reaper)](https://goreportcard.com/report/github.com/abhinavgrover15/resource-reaper)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A Kubernetes controller that automatically deletes resources based on TTL (Time-To-Live) annotations.
 
 ## Overview
