@@ -2,8 +2,8 @@
 replicaCount: 1
 
 image:
-  repository: resource-reaper
-  tag: "0.1.0"
+  repository: ghcr.io/abhinavgrover15/resource-reaper
+  tag: "latest"
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

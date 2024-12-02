@@ -41,30 +41,55 @@ Supported TTL formats:
 
 ## Installation
 
-1. Clone the repository:
+### Using kubectl
+
+1. Apply the RBAC configuration:
 ```bash
-git clone https://github.com/abhinav/resource-reaper.git
-cd resource-reaper
+kubectl apply -f https://raw.githubusercontent.com/abhinavgrover15/resource-reaper/main/config/rbac.yaml
 ```
 
-2. Deploy to Kubernetes:
+2. Deploy the controller:
 ```bash
-kubectl apply -f config/rbac.yaml
-kubectl apply -f config/deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/abhinavgrover15/resource-reaper/main/config/deployment.yaml
+```
+
+### Using Helm
+
+1. Add the Helm repository:
+```bash
+helm repo add resource-reaper https://abhinavgrover15.github.io/resource-reaper
+helm repo update
+```
+
+2. Install the chart:
+```bash
+helm install resource-reaper resource-reaper/resource-reaper
 ```
 
 ## Development
 
-Build the controller:
+### Building from source
+
+1. Clone the repository:
 ```bash
-make build
+git clone https://github.com/abhinavgrover15/resource-reaper.git
+cd resource-reaper
 ```
 
-Run tests:
+2. Build the container:
 ```bash
-make test
+docker build -t resource-reaper:latest .
 ```
+
+3. Deploy to Kubernetes:
+```bash
+kubectl apply -f config/
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-MIT License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
