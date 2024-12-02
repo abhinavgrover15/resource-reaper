@@ -932,6 +932,9 @@ func TestTTLReconciler(t *testing.T) {
 					require.NoError(t, appsv1.AddToScheme(s))
 					require.NoError(t, batchv1.AddToScheme(s))
 
+					cfg, err := getTestKubeconfig()
+					require.NoError(t, err)
+
 					client := fake.NewClientBuilder().WithScheme(s).Build()
 
 					r := &ResourceReaper{
@@ -940,7 +943,7 @@ func TestTTLReconciler(t *testing.T) {
 						Scheme: s,
 					}
 
-					mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
+					mgr, err := ctrl.NewManager(cfg, ctrl.Options{
 						Scheme: s,
 					})
 					require.NoError(t, err)
@@ -960,6 +963,9 @@ func TestTTLReconciler_SetupWithManager(t *testing.T) {
 	err = appsv1.AddToScheme(s)
 	require.NoError(t, err)
 
+	cfg, err := getTestKubeconfig()
+	require.NoError(t, err)
+
 	client := fake.NewClientBuilder().WithScheme(s).Build()
 
 	r := &ResourceReaper{
@@ -968,7 +974,7 @@ func TestTTLReconciler_SetupWithManager(t *testing.T) {
 		Scheme: s,
 	}
 
-	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
+	mgr, err := ctrl.NewManager(cfg, ctrl.Options{
 		Scheme: s,
 	})
 	require.NoError(t, err)
