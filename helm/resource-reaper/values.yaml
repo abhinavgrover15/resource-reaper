@@ -1,0 +1,49 @@
+# Default values for resource-reaper
+replicaCount: 1
+
+image:
+  repository: resource-reaper
+  tag: "0.1.0"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+rbac:
+  create: true
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Controller configuration
+controller:
+  leaderElection:
+    enabled: true
+  metrics:
+    enabled: true
+    port: 8080
+  logLevel: info
+  logFormat: json

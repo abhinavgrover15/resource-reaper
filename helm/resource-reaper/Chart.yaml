@@ -1,0 +1,16 @@
+apiVersion: v2
+name: resource-reaper
+description: A Kubernetes controller for managing resource lifecycles using TTL annotations
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+keywords:
+  - kubernetes
+  - controller
+  - ttl
+  - lifecycle
+  - resource-reaper
+maintainers:
+  - name: Abhinav Grover
+sources:
+  - https://github.com/abhinav/resource-reaper

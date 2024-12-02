@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cleanup-job
+  namespace: default
+  annotations:
+    resource-reaper/ttl: "2h"  # Job will be deleted 2 hours after completion
+spec:
+  template:
+    spec:
+      containers:
+      - name: cleanup
+        image: busybox
+        command: ['sh', '-c', 'echo "Cleanup completed" && sleep 5']
+      restartPolicy: Never

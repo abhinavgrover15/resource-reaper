@@ -1,0 +1,144 @@
+# Pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod
+  annotations:
+    resource-reaper/ttl: "2m"
+spec:
+  containers:
+  - name: nginx
+    image: nginx:latest
+---
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-deployment
+  annotations:
+    resource-reaper/ttl: "2m"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+---
+# StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: test-statefulset
+  annotations:
+    resource-reaper/ttl: "2m"
+spec:
+  serviceName: test-statefulset
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+---
+# DaemonSet
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: test-daemonset
+  annotations:
+    resource-reaper/ttl: "2m"
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-service
+  annotations:
+    resource-reaper/ttl: "2m"
+spec:
+  selector:
+    app: nginx
+  ports:
+  - port: 80
+    targetPort: 80
+---
+# ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-configmap
+  annotations:
+    resource-reaper/ttl: "2m"
+data:
+  test-key: test-value
+---
+# Secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: test-secret
+  annotations:
+    resource-reaper/ttl: "2m"
+type: Opaque
+stringData:
+  test-key: test-value
+---
+# Job
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-job
+  annotations:
+    resource-reaper/ttl: "2m"
+spec:
+  template:
+    spec:
+      containers:
+      - name: hello
+        image: busybox
+        command: ['sh', '-c', 'echo "Hello, Kubernetes!" && sleep 5']
+      restartPolicy: Never
+---
+# CronJob
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: test-cronjob
+  annotations:
+    resource-reaper/ttl: "2m"
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox
+            command: ['sh', '-c', 'echo "Hello, Kubernetes!" && sleep 5']
+          restartPolicy: Never

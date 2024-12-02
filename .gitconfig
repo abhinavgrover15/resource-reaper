@@ -1,0 +1,9 @@
+[user]
+    name = abhinavgrover15
+    email = infoabhi88@gmail.com
+
+[core]
+    sshCommand = "ssh -i ~/.ssh/id_ed25519_abhinavgrover15"
+
+[url "git@github.com:abhinavgrover15/"]
+    insteadOf = https://github.com/abhinavgrover15/
