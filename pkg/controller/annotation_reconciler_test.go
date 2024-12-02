@@ -601,8 +601,18 @@ func TestTTLReconciler_Reconcile(t *testing.T) {
 			var obj client.Object
 			if tt.resourceType == "pod" {
 				obj = createTestPod("test-pod", tt.ttl, tt.creationTime)
-			} else {
+			} else if tt.resourceType == "deployment" {
 				obj = createTestDeployment("test-deployment", tt.ttl, tt.creationTime)
+			} else if tt.resourceType == "configmap" {
+				obj = createTestConfigMap("test-configmap", tt.ttl, tt.creationTime)
+			} else if tt.resourceType == "secret" {
+				obj = createTestSecret("test-secret", tt.ttl, tt.creationTime)
+			} else if tt.resourceType == "service" {
+				obj = createTestService("test-service", tt.ttl, tt.creationTime)
+			} else if tt.resourceType == "job" {
+				obj = createTestJob("test-job", tt.ttl, tt.creationTime)
+			} else if tt.resourceType == "cronjob" {
+				obj = createTestCronJob("test-cronjob", tt.ttl, tt.creationTime)
 			}
 
 			r := setupTestReconciler(t, obj)
