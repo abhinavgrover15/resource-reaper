@@ -1,0 +1,18 @@
+repository:
+  name: resource-reaper
+  description: 🔄 Kubernetes controller for automated resource cleanup using TTL annotations. Efficiently manage resource lifecycles in your K8s clusters.
+  topics:
+    - kubernetes
+    - controller
+    - ttl
+    - resource-management
+    - golang
+    - helm-chart
+    - k8s
+    - kubernetes-controller
+    - resource-cleanup
+  homepage: https://github.com/abhinavgrover15/resource-reaper
+  has_wiki: false
+  has_projects: true
+  has_downloads: true
+  default_branch: main
