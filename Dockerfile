@@ -23,6 +23,7 @@ WORKDIR /root/
 # Copy the pre-built binary file from the previous stage
 COPY --from=builder /app/resource-reaper .
 
-# Command to run the executable
-CMD ["./resource-reaper"]
-
+# Set the binary as the entrypoint
+ENTRYPOINT ["./resource-reaper"]
+# Default command arguments can be overridden
+CMD []
