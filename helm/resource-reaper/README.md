@@ -73,6 +73,7 @@ helm package ./helm/resource-reaper
 
 To validate the chart:
 
+
 ```bash
 helm lint ./helm/resource-reaper
 helm template ./helm/resource-reaper
