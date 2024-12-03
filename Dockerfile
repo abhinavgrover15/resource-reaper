@@ -25,3 +25,4 @@ COPY --from=builder /app/resource-reaper .
 
 # Command to run the executable
 CMD ["./resource-reaper"]
+
