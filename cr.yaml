@@ -1,0 +1,6 @@
+owner: abhinavgrover15
+git-base-url: https://api.github.com/
+charts-repo: https://abhinavgrover15.github.io/resource-reaper
+pages-branch: gh-pages
+index-path: index.yaml
+package-path: .cr-release-packages/
