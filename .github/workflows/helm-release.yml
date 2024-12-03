@@ -36,10 +36,29 @@ jobs:
         run: |
           helm package helm/resource-reaper --destination .cr-release-packages/
 
+      - name: Create index.yaml
+        run: |
+          helm repo index .cr-release-packages/ --url https://abhinavgrover15.github.io/resource-reaper/
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.5.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_SKIP_EXISTING: true
         with:
           charts_dir: helm
           config: cr.yaml
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: .cr-release-packages/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
