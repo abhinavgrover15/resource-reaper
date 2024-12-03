@@ -2,7 +2,7 @@ owner: abhinavgrover15
 git-base-url: https://api.github.com/
 git-repo: resource-reaper
 charts-repo: https://abhinavgrover15.github.io/resource-reaper
-pages-branch: gh-pages
-index-path: .cr-index/index.yaml
+pages-branch: main
+index-path: index.yaml
 package-path: .cr-release-packages/
 skip-existing: true

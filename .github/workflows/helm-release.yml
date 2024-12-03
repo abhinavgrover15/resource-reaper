@@ -15,9 +15,6 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -32,28 +29,8 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v3
 
-      - name: Create required directories
-        run: |
-          mkdir -p .cr-release-packages
-          mkdir -p .cr-index
-
-      - name: Initialize gh-pages branch
-        run: |
-          # Create and checkout gh-pages branch
-          git checkout -B gh-pages
-          # Remove everything except .git
-          git rm -rf .
-          # Create empty index.yaml
-          echo "apiVersion: v1
-          entries: {}
-          generated: $(date -u +'%Y-%m-%dT%H:%M:%SZ')" > index.yaml
-          # Commit and push
-          git add index.yaml
-          git commit -m "Initialize gh-pages branch with empty index.yaml"
-          git push -f origin gh-pages
-          # Return to main branch
-          git checkout main
-          git clean -fd
+      - name: Create release directory
+        run: mkdir -p .cr-release-packages
 
       - name: Package Helm Chart
         run: |
@@ -66,12 +43,3 @@ jobs:
         with:
           charts_dir: helm
           config: cr.yaml
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          path: .cr-release-packages
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
